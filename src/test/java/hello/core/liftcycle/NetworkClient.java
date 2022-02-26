@@ -1,6 +1,9 @@
 package hello.core.liftcycle;
 
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 public class NetworkClient {
 
     // 스프링 빈의 이벤트 라이프 사이클
@@ -32,13 +35,14 @@ public class NetworkClient {
 
     // 의존관계 주입이 끝나면 호출해주겠다는 뜻
 
+    @PostConstruct // 외부라이브러리에 적용안된다. 외부라이브러리를 초기화, 종료 해야하면 @Bean기능을 사용해야함
     public void init() {
         System.out.println("NetworkClient.init");
         connect();
         call("초기화 연결 메시지");
     }
 
-
+    @PreDestroy
     public void close() throws Exception {
         System.out.println("NetworkClient.close");
         disconnect();
